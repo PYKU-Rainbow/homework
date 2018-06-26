@@ -38,8 +38,8 @@ def scattergram (filename,x_axis,y_axis):
     y_axis = int(input("y축에 해당하는 번호를 입력하세요:"))
 
     # 산포도 그래프 그리기
-    x_label = Graph_list_subject[x_axis]
-    y_label = Graph_list_subject[y_axis]
+    x_label = Graph_list_subject[x_axis][0]
+    y_label = Graph_list_subject[y_axis][0]
 
     plt.plot(Graph_list_body[x_axis], Graph_list_body[y_axis], 'o')
     plt.xlabel(x_label)
