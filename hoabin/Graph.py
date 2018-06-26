@@ -4,16 +4,18 @@ import sys
 import os
 import pylab as plt
 
-sys.path.append("C:/Users/USER/PycharmProjects/Project-pre/func")
+sys.path.append("../func")
 
 from d0_makelist_column import MakeList_column
 
-# scattergram은 산포도 그래프를 그리는 함수입니다. scattergram(파일,x축 행번호, y축 행번호)
+# scattergram은 산포도 그래프를 그리는 함수입니다. scattergram(파일이름)
 def scattergram (filename,x_axis,y_axis):
     filename = filename
     Raw_list = MakeList_column(filename)
     Graph_list_subject = []
     Graph_list_body = []
+    x_axis = 0
+    y_axis = 0
     # 데이터를 이름과 값의 리스트로 분리합니다. 이름: Graph_list_subject, 값: Graph_list_value
     for i in range(len(Raw_list)):
         Temp_list_subject = []
@@ -29,9 +31,13 @@ def scattergram (filename,x_axis,y_axis):
         Graph_list_body.append(Temp_list_body)
 
     # 산포도 그래프 그리기
-    plt.plot(Graph_list_body[x_axis],Graph_list_body[y_axis],'o')
-    plt.xlabel(Graph_list_subject[x_axis])
-    plt.ylabel(Graph_list_subject[y_axis])
+    x_label = Graph_list_subject[x_axis]
+    y_label = Graph_list_subject[y_axis]
+
+    plt.plot(Graph_list_body[x_axis], Graph_list_body[y_axis], 'o')
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(x_label + y_label)
     plt.show()
 
 def line_graph (filename,y_axis):
@@ -72,7 +78,7 @@ def line_graph (filename,y_axis):
     plt.title(Graph_list_subject[y_axis])
     plt.show()
 
-filename = "C:/Users/USER/PycharmProjects/Project-pre/data_txt/ALL_DATA/Aqi_Beijing_monthly.txt"
+filename = "../data_txt/ALL_DATA/Aqi_Beijing_monthly.txt"
 
 scattergram(filename,2,2)
 
