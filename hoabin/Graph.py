@@ -30,13 +30,6 @@ def scattergram (filename,x_axis,y_axis):
         Graph_list_subject.append(Temp_list_subject)
         Graph_list_body.append(Temp_list_body)
 
-    # 보고 싶은 x축, y축 데이터를 선택합니다.
-    for n in range(len(Graph_list_subject)):
-        print(n, ':', Graph_list_subject[n])
-
-    x_axis = int(input("x축에 해당하는 번호를 입력하세요:"))
-    y_axis = int(input("y축에 해당하는 번호를 입력하세요:"))
-
     # 산포도 그래프 그리기
     x_label = Graph_list_subject[x_axis][0]
     y_label = Graph_list_subject[y_axis][0]
@@ -80,7 +73,7 @@ def line_graph (filename,y_axis):
         Graph_list_subject.append(Temp_list_subject)
         Graph_list_body.append(Temp_list_body)
 
-    #꺾은선 그래프 그리기
+     #꺾은선 그래프 그리기
     plt.plot(Graph_list_body[y_axis])
     plt.title(Graph_list_subject[y_axis])
     plt.show()
