@@ -3,6 +3,7 @@
 import sys
 import os
 import pylab as plt
+import numpy as np
 
 sys.path.append("../func")
 
@@ -79,13 +80,76 @@ def line_graph (filename,y_axis):
         Graph_list_subject.append(Temp_list_subject)
         Graph_list_body.append(Temp_list_body)
 
-     #꺾은선 그래프 그리기
-    plt.plot(Graph_list_body[y_axis])
-    plt.title(Graph_list_subject[y_axis])
+    # x축에 날짜 간격 리스트 만들기
+    def format_date(x):
+        format_date_list = []
+        for i in range(len(x)):
+            if x[i][5:7] == '01' and x[i][8:10] == '01':
+                k = x[i]
+                format_date_list.append(k)
+            #if x[i][5:7] == '06' and x[i][8:10] == '01':
+            #    k = x[i]
+            #    format_date_list.append(k)
+            #if x[i][5:7] == '09' and x[i][8:10] == '01':
+            #    k = x[i]
+            #    format_date_list.append(k)
+            #if x[i][5:7] == '12' and x[i][8:10] == '01':
+            #    k = x[i]
+            #    format_date_list.append(k)
+            else:
+                k = ""
+                format_date_list.append(k)
+        return format_date_list
+
+    N = len(Graph_list_body[0])
+    ind = np.arange(N)
+
+    x_label = Graph_list_subject[0][0]
+    y_label = Graph_list_subject[y_axis][0]
+
+    plt.plot(ind, Graph_list_body[y_axis], '-')
+    plt.xticks(ind, format_date((Graph_list_body[0])))
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(y_label)
+
     plt.show()
 
-filename = "../data_txt/ALL_DATA/Aqi_Beijing_monthly.txt"
+def box_plot(filename):
+    filename = filename
+    Raw_list = MakeList_column(filename)
+    Graph_list_subject = []
+    Graph_list_body = []
+    x_axis = 0
+    y_axis = 0
+    # 데이터를 이름과 값의 리스트로 분리합니다. 이름: Graph_list_subject, 값: Graph_list_value
+    for i in range(len(Raw_list)):
+        Temp_list_subject = []
+        Temp_list_body = []
+        for k in range(len(Raw_list[i])):
+            if k == 0:
+                Temp_list_subject.append(Raw_list[i][k])
+            else:
+                Temp_list_body.append(float(Raw_list[i][k]))
 
-scattergram(filename,2,2)
+        # 그래프용 리스트 완성
+        Graph_list_subject.append(Temp_list_subject)
+        Graph_list_body.append(Temp_list_body)
 
-line_graph(filename,4)
+    labels = [Graph_list_subject[i+1][0] for i in range(len(Graph_list_subject[1:]))]
+
+    fig1, ax = plt.subplots()
+    ax.set_title(filename)
+    ax.boxplot(Graph_list_body[1:], vert=True, labels=labels, showmeans = True, meanline = True, whis = [0, 100])
+    ax.xaxis.set_tick_params(rotation=30, labelsize=10)
+    ax.yaxis.grid(True)
+
+    plt.show()
+
+filename = "../data_txt/ALL_DATA/Aqi_Beijing_WIND.txt"
+
+#scattergram(filename,2,2)
+
+#line_graph(filename,4)
+
+#box_plot(filename)
